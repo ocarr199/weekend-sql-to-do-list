@@ -29,10 +29,10 @@ taskRouter.post('/',  (req, res) => {
     let newTask = req.body;
     console.log(`Adding Task`, newTask);
   
-    let queryText = `INSERT INTO "tasks" ("task")
-                     VALUES ($1);`;
-                     console.log([newTask.task])
-    pool.query(queryText, [newTask.task])
+    let queryText = `INSERT INTO "tasks" ("task","priority")
+                     VALUES ($1,$2);`;
+                     console.log([newTask.task, newTask.priority])
+    pool.query(queryText, [newTask.task, newTask.priority])
       .then(result => {
         res.sendStatus(201);
       })
@@ -59,6 +59,21 @@ taskRouter.put('/:id', (req,res)=>{
     res.sendStatus(500); // shows error on this server route
 })
 })
+// END PUT
 
+// DELETE
+taskRouter.delete('/:id', (req,res) =>{
+  const taskToDelete = req.params.id;
+  const queryString = `Delete FRom "tasks" WHERE "tasks".id =$1;`;
+  console.log('task to delete', taskToDelete);
+  pool.query(queryString, [taskToDelete])
+  .then(resultn => {
+    console.log(`Deleted task with id ${taskToDelete}`);
+    res.sendStatus(200)
+  }).catch(error => {
+    console.log(error);
+    res.sendStatus(500)
+  })
+})
 
 module.exports = taskRouter;
