@@ -22,16 +22,28 @@ function getTasks() {
     console.log(response);
     $('#showTasks').empty();
     for(let task of response){
-      console.log(task);
-      $('#showTasks').append(`
+      console.log(task.completed);
+      if(task.completed == false){
+        $('#showTasks').append(`
       <tr> 
           <td> ${task.task}</td>
           <td><button class="completedButton" data-id="${task.id}">Completed</button></td>
           <td><button class="deleteButton" data-id="${task.id}">Delete</button></td>
         </tr>
       `)
+      }else if (task.completed == true){
+        $('#completeTasks').append(`
+        <tr> 
+            <td> ${task.task}</td>
+            <td><button class="deleteButton" data-id="${task.id}">Delete</button></td>
+          </tr>
+        `)
+      }
+     
     }
- 
+
+
+
   }).catch( err => {
     // console log the error
     console.log('Error in GET', err);
@@ -80,5 +92,7 @@ function completedTask(taskId){
 })
 }
 
-
+function deleteTask(){
+  
+}
 
