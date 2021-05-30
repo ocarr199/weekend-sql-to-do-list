@@ -2,7 +2,7 @@
 
 body{
     padding: 20px;
-    background-color: #D0F8FF;
+    /* background-color: #D0F8FF; */
 }
 /* header */
 h1{
@@ -14,7 +14,7 @@ h1{
 /* input */
 .input-group{
 
-    width: 40vw;
+    width: 60vw;
     text-align: center;
     margin: 25px;
     margin-left: 20vw;
@@ -32,6 +32,10 @@ h1{
 float:left;
  width: 45vw;
  margin-left: 8vw;
+ padding: 20px;
+}
+.task{
+    padding: 5px;
 }
 /* End current tasks table */
 /* completed Tasks */
@@ -39,4 +43,5 @@ float:left;
 float:right;
     width: 30vw;
     margin-right: 8vw;
+    padding: 20px;
 }

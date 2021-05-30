@@ -8,6 +8,7 @@ $(document).ready(function () {
   $('#addTaskButton').on('click', postTask)
   $('#showTasks').on('click', '.completedButton', handleComplete)
   $(document).on('click', '.deleteButton', handleDelete)
+  dateChecker()
 
 });
 
@@ -57,8 +58,8 @@ function appendList(task, priorityClass){
       if(task.completed == false){
         $('#showTasks').append(`
       <tr class="table-${priorityClass}"> 
-          <td> ${task.task}</td>
-          <td> ${task.priority}</td>
+          <td>  ${task.task}</td>
+          <td>  ${task.priority}</td>
           <td><button class="completedButton" data-id="${task.id}">Completed</button></td>
           <td><button class="deleteButton" data-id="${task.id}">Delete</button></td>
         </tr>
@@ -66,7 +67,7 @@ function appendList(task, priorityClass){
           // If task has been completed go into completed tasks
       }else if (task.completed == true){
         $('#completeTasks').append(`
-        <tr class="completedTask table-success"> 
+        <tr class="completedTask table-success "> 
             <td> ${task.task}</td>
             <td> ${task.priority}</td>
             <td><button class="deleteButton" data-id="${task.id}">Delete</button></td>
@@ -84,9 +85,10 @@ function postTask() {
   // create new task object
   newTask = {
     task: $('#taskInp').val(),
-    priority: $('#priorityInp option:selected').text()
+    priority: $('#priorityInp option:selected').text(),
+    date: $('#dateInp').val()
   }
-
+console.log(newTask)
   $.ajax({
     type: 'POST',
     url: '/tasks',
@@ -138,3 +140,6 @@ function deleteTask(taskId){
   })
 }
 
+function dateChecker(){
+ console.log( new Date().toLocaleDateString());
+}

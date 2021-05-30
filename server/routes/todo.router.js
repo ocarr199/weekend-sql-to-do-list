@@ -29,10 +29,10 @@ taskRouter.post('/',  (req, res) => {
     let newTask = req.body;
     console.log(`Adding Task`, newTask);
   
-    let queryText = `INSERT INTO "tasks" ("task","priority")
-                     VALUES ($1,$2);`;
-                     console.log([newTask.task, newTask.priority])
-    pool.query(queryText, [newTask.task, newTask.priority])
+    let queryText = `INSERT INTO "tasks" ("task","priority","due-date")
+                     VALUES ($1,$2, $3);`;
+                     console.log([newTask.task, newTask.priority, newTask.date])
+    pool.query(queryText, [newTask.task, newTask.priority, newTask.date])
       .then(result => {
         res.sendStatus(201);
       })

@@ -9,37 +9,48 @@
     <link rel="stylesheet" href="./styles/style.css">
     
   </head>
-  <body>
+  <body class="bg-secondary">
     <header>
       <h1>To DO LIST</h1>
     </header>
- 
+  
     
    
       <section class="input-group " id="addTask">
         <span class="input-group-text" id="basic-addon1">Add Task</span>
         <!-- Inputs -->
           <input class="form-control" type="text" id="taskInp" value="" placeholder="Task">
+          <span class="input-group-text" id="basic-addon1">Priority Level</span>
           <select class="form-select form-select-lg " aria-label=".form-select-lg example" id="priorityInp">
             <option selected="selected">Priority</option>
             <option>Low</option>
             <option>Medium</option>
             <option>High</option>
           </select>
+          <span class="input-group-text" id="basic-addon1">Due Date</span>
+          <input type="date" class="form-control" id="dateInp">
           <button class="btn btn-primary" type="button" id="addTaskButton">Add Task</button>
        <!-- End of Inputs -->
         </section>
 
 
-    <section class="current-table">
+    <section class="current-table bg-light">
       <h2>Current Tasks</h2>
       <table class="table  table-bordered current-tasks">
+        <thead>
+          <tr>
+            <th scope="col">Task</th>
+            <th scope="col">Priority Level</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
         <tbody id="showTasks">
           <!-- append tasks here -->
         </tbody>
       </table>
     </section>
-    <section class="complete-table">
+    <section class="complete-table bg-light">
       <h2>Completed Tasks</h2>
       <table class="table completed-tasks">
         <tbody id="completeTasks">
