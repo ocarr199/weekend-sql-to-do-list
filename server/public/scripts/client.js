@@ -22,61 +22,60 @@ function getTasks() {
   }).then( response => {
     // console log the response
     console.log(response);
+    // clear dom before each append
     $('#showTasks').empty();
     $('#completeTasks').empty();
+    // go through all rows in database
     for(let task of response){
       console.log(task.priority);
+      // depending on value of task priority appendList will
+      // get called with info, warning, or danger which will
+      // be used to add different classes for background color
       switch(task.priority){
         case "Low":
-          if(task.completed == false){
-            $('#showTasks').append(`
-          <tr class="table-info" > 
-              <td> ${task.task}</td>
-              <td> ${task.priority}</td>
-              <td><button class="completedButton" data-id="${task.id}">Completed</button></td>
-              <td><button class="deleteButton" data-id="${task.id}">Delete</button></td>
-            </tr>
-          `)
-          }else if (task.completed == true){
-            $('#completeTasks').append(`
-            <tr class="table-success"> 
-                <td> ${task.task}</td>
-                <td> ${task.priority}</td>
-                <td><button class="deleteButton" data-id="${task.id}">Delete</button></td>
-              </tr>
-            `)
-          }
+          appendList(task, 'info')
+          break;
+          case "Medium":
+            appendList(task, 'warning')
+          break;
+          case "High":
+         appendList(task, 'danger')
+            break;
       }
-      // console.log(task.completed);
-      // if(task.completed == false){
-      //   $('#showTasks').append(`
-      // <tr> 
-      //     <td> ${task.task}</td>
-      //     <td> ${task.priority}</td>
-      //     <td><button class="completedButton" data-id="${task.id}">Completed</button></td>
-      //     <td><button class="deleteButton" data-id="${task.id}">Delete</button></td>
-      //   </tr>
-      // `)
-      // }else if (task.completed == true){
-      //   $('#completeTasks').append(`
-      //   <tr> 
-      //       <td> ${task.task}</td>
-      //       <td> ${task.priority}</td>
-      //       <td><button class="deleteButton" data-id="${task.id}">Delete</button></td>
-      //     </tr>
-      //   `)
-      // }
-     
     }
-
-
-
   }).catch( err => {
     // console log the error
     console.log('Error in GET', err);
   });
 } // END getTasks
 
+// Function to append items to the DOM
+function appendList(task, priorityClass){
+    console.log(task.completed);
+    // If task hasnt been completed go into current tasks
+    // priorityClass is used to set background color
+      if(task.completed == false){
+        $('#showTasks').append(`
+      <tr class="table-${priorityClass}"> 
+          <td> ${task.task}</td>
+          <td> ${task.priority}</td>
+          <td><button class="completedButton" data-id="${task.id}">Completed</button></td>
+          <td><button class="deleteButton" data-id="${task.id}">Delete</button></td>
+        </tr>
+      `)
+          // If task has been completed go into completed tasks
+      }else if (task.completed == true){
+        $('#completeTasks').append(`
+        <tr class="completedTask table-success"> 
+            <td> ${task.task}</td>
+            <td> ${task.priority}</td>
+            <td><button class="deleteButton" data-id="${task.id}">Delete</button></td>
+          </tr>
+        `)
+      }
+     
+
+}
 
 
 function postTask() {
