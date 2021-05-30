@@ -28,20 +28,23 @@ function getTasks() {
     $('#completeTasks').empty();
     // go through all rows in database
     for(let task of response){
-      console.log(task.priority);
+      console.log(task);
       // depending on value of task priority appendList will
       // get called with info, warning, or danger which will
       // be used to add different classes for background color
       switch(task.priority){
         case "Low":
-          appendList(task, 'info')
+          appendList(task, 'info',task.priority)
           break;
           case "Medium":
-            appendList(task, 'warning')
+            appendList(task, 'warning',task.priority)
           break;
           case "High":
-         appendList(task, 'danger')
+         appendList(task, 'danger', task.priority)
             break;
+            case "Priority":
+              appendList(task, '', '')
+                 break;
       }
     }
   }).catch( err => {
@@ -51,17 +54,18 @@ function getTasks() {
 } // END getTasks
 
 // Function to append items to the DOM
-function appendList(task, priorityClass){
-    console.log(task.completed);
+function appendList(task, priorityClass, priorityLevel){
+    console.log(task.dueDate);
     // If task hasnt been completed go into current tasks
     // priorityClass is used to set background color
       if(task.completed == false){
         $('#showTasks').append(`
       <tr class="table-${priorityClass}"> 
           <td>  ${task.task}</td>
-          <td>  ${task.priority}</td>
-          <td><button class="completedButton" data-id="${task.id}">Completed</button></td>
-          <td><button class="deleteButton" data-id="${task.id}">Delete</button></td>
+          <td>  ${priorityLevel}</td>
+          <td> ${task.dueDate}</td>
+          <td><button class="completedButton btn btn-success" data-id="${task.id}">Completed</button></td>
+          <td><button class="deleteButton btn btn-danger" data-id="${task.id}">Delete</button></td>
         </tr>
       `)
           // If task has been completed go into completed tasks
@@ -69,8 +73,9 @@ function appendList(task, priorityClass){
         $('#completeTasks').append(`
         <tr class="completedTask table-success "> 
             <td> ${task.task}</td>
-            <td> ${task.priority}</td>
-            <td><button class="deleteButton" data-id="${task.id}">Delete</button></td>
+            <td>  ${priorityLevel}</td>
+            <td> ${task.dueDate}</td>
+            <td><button class="deleteButton btn btn-danger" data-id="${task.id}">Delete</button></td>
           </tr>
         `)
       }
@@ -86,7 +91,7 @@ function postTask() {
   newTask = {
     task: $('#taskInp').val(),
     priority: $('#priorityInp option:selected').text(),
-    date: $('#dateInp').val()
+    dueDate: $('#dateInp').val()
   }
 console.log(newTask)
   $.ajax({
@@ -100,6 +105,8 @@ console.log(newTask)
       console.log('Error in POST', error)
       alert('Unable to add new Task');
     });
+    $('#taskInp').val('')
+    
 }
 
 function handleComplete(){
